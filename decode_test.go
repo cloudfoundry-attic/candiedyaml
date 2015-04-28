@@ -32,7 +32,7 @@ var _ = Describe("Decode", func() {
 		var v interface{}
 		err := d.Decode(&v)
 
-		Ω(err).ShouldNot(HaveOccurred())
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	Context("strings", func() {
@@ -41,8 +41,8 @@ var _ = Describe("Decode", func() {
 `))
 			var v string
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(""))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(""))
 		})
 
 		It("Decodes an empty string to an interface", func() {
@@ -50,8 +50,8 @@ var _ = Describe("Decode", func() {
 `))
 			var v interface{}
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(""))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(""))
 		})
 
 		It("Decodes a map containing empty strings to an interface", func() {
@@ -59,8 +59,8 @@ var _ = Describe("Decode", func() {
 `))
 			var v interface{}
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[interface{}]interface{}{"": ""}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[interface{}]interface{}{"": ""}))
 		})
 	})
 
@@ -71,8 +71,8 @@ var _ = Describe("Decode", func() {
 			var v interface{}
 			err := d.Decode(&v)
 
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω((v).([]interface{})).To(Equal([]interface{}{"Mark McGwire", "Sammy Sosa", "Ken Griffey"}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect((v).([]interface{})).To(Equal([]interface{}{"Mark McGwire", "Sammy Sosa", "Ken Griffey"}))
 		})
 
 		It("Decodes to []string", func() {
@@ -81,8 +81,8 @@ var _ = Describe("Decode", func() {
 			v := make([]string, 0, 3)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).To(Equal([]string{"Mark McGwire", "Sammy Sosa", "Ken Griffey"}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal([]string{"Mark McGwire", "Sammy Sosa", "Ken Griffey"}))
 		})
 
 		It("Decodes a sequence of maps", func() {
@@ -91,12 +91,13 @@ var _ = Describe("Decode", func() {
 			v := make([]map[string]interface{}, 1)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).To(Equal([]map[string]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal([]map[string]interface{}{
 				{"item": "Super Hoop", "quantity": int64(1)},
 				{"item": "Basketball", "quantity": int64(4)},
 				{"item": "Big Shoes", "quantity": int64(1)},
 			}))
+
 		})
 
 		Describe("As structs", func() {
@@ -112,11 +113,12 @@ var _ = Describe("Decode", func() {
 				v := make([]batter, 0, 1)
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).To(Equal([]batter{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal([]batter{
 					batter{Name: "Mark McGwire", HR: 65, AVG: 0.278},
 					batter{Name: "Sammy Sosa", HR: 63, AVG: 0.288},
 				}))
+
 			})
 
 			It("Tagged struct", func() {
@@ -131,11 +133,12 @@ var _ = Describe("Decode", func() {
 				v := make([]batter, 0, 1)
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).To(Equal([]batter{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal([]batter{
 					batter{N: "Mark McGwire", H: 65, A: 0.278},
 					batter{N: "Sammy Sosa", H: 63, A: 0.288},
 				}))
+
 			})
 
 			It("handles null values", func() {
@@ -149,8 +152,8 @@ default:
 `))
 				var s S
 				err := d.Decode(&s)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(s).Should(Equal(S{Default: nil}))
+				Expect(err).NotTo(HaveOccurred())
+				Expect(s).To(Equal(S{Default: nil}))
 
 			})
 
@@ -166,11 +169,12 @@ default:
 				v := make([]batter, 0, 1)
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).To(Equal([]batter{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal([]batter{
 					batter{N: "Mark McGwire", HR: 65},
 					batter{N: "Sammy Sosa", HR: 63},
 				}))
+
 			})
 		})
 
@@ -180,12 +184,13 @@ default:
 			v := make([][]interface{}, 1)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).To(Equal([][]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal([][]interface{}{
 				{"name", "hr", "avg"},
 				{"Mark McGwire", int64(65), float64(0.278)},
 				{"Sammy Sosa", int64(63), float64(0.288)},
 			}))
+
 		})
 	})
 
@@ -196,12 +201,13 @@ default:
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω((v).(map[interface{}]interface{})).To(Equal(map[interface{}]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect((v).(map[interface{}]interface{})).To(Equal(map[interface{}]interface{}{
 				"hr":  int64(65),
 				"avg": float64(0.278),
 				"rbi": int64(147),
 			}))
+
 		})
 
 		It("Decodes to a struct", func() {
@@ -216,8 +222,8 @@ default:
 			v := batter{}
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).To(Equal(batter{HR: 65, AVG: 0.278, RBI: 147}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(batter{HR: 65, AVG: 0.278, RBI: 147}))
 		})
 
 		It("Decodes to a map of string arrays", func() {
@@ -226,8 +232,8 @@ default:
 			v := make(map[string][]string)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).To(Equal(map[string][]string{"hr": []string{"Mark McGwire", "Sammy Sosa"}, "rbi": []string{"Sammy Sosa", "Ken Griffey"}}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string][]string{"hr": []string{"Mark McGwire", "Sammy Sosa"}, "rbi": []string{"Sammy Sosa", "Ken Griffey"}}))
 		})
 	})
 
@@ -238,11 +244,12 @@ default:
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω((v).([]interface{})).To(Equal([]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect((v).([]interface{})).To(Equal([]interface{}{
 				map[interface{}]interface{}{"name": "Mark McGwire", "hr": int64(65), "avg": float64(0.278)},
 				map[interface{}]interface{}{"name": "Sammy Sosa", "hr": int64(63), "avg": float64(0.288)},
 			}))
+
 		})
 	})
 
@@ -252,10 +259,11 @@ default:
 		v := ""
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal(`\//||\/||
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal(`\//||\/||
 // ||  ||__
 `))
+
 	})
 
 	It("Decodes folded strings", func() {
@@ -264,8 +272,8 @@ default:
 		v := ""
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal("Sammy Sosa completed another fine season with great stats.\n\n  63 Home Runs\n  0.288 Batting Average\n\nWhat a year!\n"))
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal("Sammy Sosa completed another fine season with great stats.\n\n  63 Home Runs\n  0.288 Batting Average\n\nWhat a year!\n"))
 	})
 
 	It("Decodes literal and folded strings with indents", func() {
@@ -274,8 +282,8 @@ default:
 		v := make(map[string]string)
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal(map[string]string{
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal(map[string]string{
 			"name": "Mark McGwire",
 			"accomplishment": `Mark set a major league home run record in 1998.
 `,
@@ -283,6 +291,7 @@ default:
 0.278 Batting Average
 `,
 		}))
+
 	})
 
 	It("Decodes single quoted", func() {
@@ -291,10 +300,11 @@ default:
 		v := make(map[string]string)
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal(map[string]string{
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal(map[string]string{
 			"quoted": ` # not a 'comment'.`,
 		}))
+
 	})
 
 	Context("ints", func() {
@@ -304,13 +314,14 @@ default:
 			v := make(map[string]interface{})
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]interface{}{
 				"canonical":   int64(12345),
 				"decimal":     int64(12345),
 				"octal":       int64(12),
 				"hexadecimal": int64(12),
 			}))
+
 		})
 
 		It("Decodes into int64", func() {
@@ -319,13 +330,14 @@ default:
 			v := make(map[string]int64)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]int64{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]int64{
 				"canonical":   int64(12345),
 				"decimal":     int64(12345),
 				"octal":       int64(12),
 				"hexadecimal": int64(12),
 			}))
+
 		})
 
 		Context("boundary values", func() {
@@ -335,8 +347,8 @@ default:
 
 					d := NewDecoder(strings.NewReader(strconv.FormatInt(val, 10)))
 					err := d.Decode(&v)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(v).Should(Equal(val))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(v).To(Equal(val))
 
 				})
 			}
@@ -347,8 +359,8 @@ default:
 
 					d := NewDecoder(strings.NewReader(strconv.FormatInt(int64(val), 10)))
 					err := d.Decode(&v)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(v).Should(Equal(val))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(v).To(Equal(val))
 
 				})
 			}
@@ -359,8 +371,8 @@ default:
 
 					d := NewDecoder(strings.NewReader(strconv.FormatInt(val, 10)))
 					err := d.Decode(&v)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(v).Should(Equal(val))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(v).To(Equal(val))
 				})
 			}
 
@@ -381,17 +393,18 @@ default:
 		v := make(map[string]float64)
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
+		Expect(err).NotTo(HaveOccurred())
 
-		Ω(math.IsNaN(v["not a number"])).Should(BeTrue())
+		Expect(math.IsNaN(v["not a number"])).To(BeTrue())
 		delete(v, "not a number")
 
-		Ω(v).Should(Equal(map[string]float64{
+		Expect(v).To(Equal(map[string]float64{
 			"canonical":         float64(1230.15),
 			"exponential":       float64(1230.15),
 			"fixed":             float64(1230.15),
 			"negative infinity": math.Inf(-1),
 		}))
+
 	})
 
 	It("Decodes booleans, nil and strings", func() {
@@ -400,13 +413,14 @@ default:
 		v := make(map[string]interface{})
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal(map[string]interface{}{
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal(map[string]interface{}{
 			"":       interface{}(nil),
 			"true":   true,
 			"false":  false,
 			"string": "12345",
 		}))
+
 	})
 
 	It("Decodes a null ptr", func() {
@@ -414,8 +428,8 @@ default:
 `))
 		var v *bool
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(BeNil())
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(BeNil())
 	})
 
 	It("Decodes dates/time", func() {
@@ -424,13 +438,14 @@ default:
 		v := make(map[string]time.Time)
 
 		err := d.Decode(&v)
-		Ω(err).ShouldNot(HaveOccurred())
-		Ω(v).Should(Equal(map[string]time.Time{
+		Expect(err).NotTo(HaveOccurred())
+		Expect(v).To(Equal(map[string]time.Time{
 			"canonical": time.Date(2001, time.December, 15, 2, 59, 43, int(1*time.Millisecond), time.UTC),
 			"iso8601":   time.Date(2001, time.December, 14, 21, 59, 43, int(10*time.Millisecond), time.FixedZone("", -5*3600)),
 			"spaced":    time.Date(2001, time.December, 14, 21, 59, 43, int(10*time.Millisecond), time.FixedZone("", -5*3600)),
 			"date":      time.Date(2002, time.December, 14, 0, 0, 0, 0, time.UTC),
 		}))
+
 	})
 
 	Context("Tags", func() {
@@ -440,10 +455,11 @@ default:
 			v := make(map[string]string)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]string{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]string{
 				"not-date": "2002-04-28",
 			}))
+
 		})
 
 		It("handles non-specific tags", func() {
@@ -453,8 +469,8 @@ not_parsed: ! 123
 `))
 			v := make(map[string]int)
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]int{"not_parsed": 123}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]int{"not_parsed": 123}))
 		})
 
 		It("handles non-specific tags", func() {
@@ -465,8 +481,8 @@ not_parsed: ! 123
 `))
 			v := make(map[string]string)
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]string{"a complex key": "123"}))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]string{"a complex key": "123"}))
 		})
 	})
 
@@ -477,8 +493,8 @@ not_parsed: ! 123
 			v := make(map[string][]byte)
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string][]byte{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string][]byte{
 				"picture": []byte{0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x0c, 0x00,
 					0x0c, 0x00, 0x84, 0x00, 0x00, 0xff, 0xff, 0xf7, 0xf5, 0xf5, 0xee,
 					0xe9, 0xe9, 0xe5, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0xe7, 0xe7,
@@ -487,6 +503,7 @@ not_parsed: ! 123
 					0x9e, 0x9e, 0x9e, 0x69, 0x5e, 0x10, 0x27, 0x20, 0x82, 0x0a, 0x01,
 					0x00, 0x3b},
 			}))
+
 		})
 
 		It("to string", func() {
@@ -494,8 +511,8 @@ not_parsed: ! 123
 			var v string
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal("abcdefg"))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal("abcdefg"))
 		})
 
 		It("to string via alternate form", func() {
@@ -503,8 +520,8 @@ not_parsed: ! 123
 			var v string
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal("abcdefg"))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal("abcdefg"))
 		})
 
 		It("to interface", func() {
@@ -512,8 +529,8 @@ not_parsed: ! 123
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal([]byte("abcdefg")))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal([]byte("abcdefg")))
 		})
 	})
 
@@ -525,11 +542,12 @@ not_parsed: ! 123
 				v := make(map[string][]string)
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string][]string{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string][]string{
 					"hr":  {"Mark McGwire", "Sammy Sosa"},
 					"rbi": {"Sammy Sosa", "Ken Griffey"},
 				}))
+
 			})
 
 			It("aliases sequences", func() {
@@ -542,11 +560,12 @@ rbi: *ss
 `))
 				v := make(map[string][]string)
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string][]string{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string][]string{
 					"hr":  {"MG", "SS"},
 					"rbi": {"MG", "SS"},
 				}))
+
 			})
 
 			It("aliases maps", func() {
@@ -558,11 +577,12 @@ rbi: *ss
 `))
 				v := make(map[string]map[string]string)
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]map[string]string{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]map[string]string{
 					"hr":  {"MG": "SS"},
 					"rbi": {"MG": "SS"},
 				}))
+
 			})
 		})
 
@@ -579,11 +599,12 @@ c: *map
 `))
 			var s S
 			err := d.Decode(&s)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(s).Should(Equal(S{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(s).To(Equal(S{
 				A: map[string]int{"b": 1},
 				C: map[string]string{"b": "1"},
 			}))
+
 		})
 
 		It("fails if an anchor is undefined", func() {
@@ -593,8 +614,8 @@ a: *missing
 `))
 			m := make(map[string]string)
 			err := d.Decode(&m)
-			Ω(err).Should(HaveOccurred())
-			Ω(err.Error()).Should(MatchRegexp("missing anchor.*line.*column.*"))
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(MatchRegexp("missing anchor.*line.*column.*"))
 		})
 
 		Context("to Interface", func() {
@@ -604,11 +625,12 @@ a: *missing
 				v := make(map[string]interface{})
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]interface{}{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]interface{}{
 					"hr":  []interface{}{"Mark McGwire", "Sammy Sosa"},
 					"rbi": []interface{}{"Sammy Sosa", "Ken Griffey"},
 				}))
+
 			})
 
 			It("aliases sequences", func() {
@@ -621,11 +643,12 @@ rbi: *ss
 `))
 				v := make(map[string]interface{})
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]interface{}{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]interface{}{
 					"hr":  []interface{}{"MG", "SS"},
 					"rbi": []interface{}{"MG", "SS"},
 				}))
+
 			})
 
 			It("aliases maps", func() {
@@ -637,11 +660,12 @@ rbi: *ss
 `))
 				v := make(map[string]interface{})
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]interface{}{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]interface{}{
 					"hr":  map[interface{}]interface{}{"MG": "SS"},
 					"rbi": map[interface{}]interface{}{"MG": "SS"},
 				}))
+
 			})
 
 			It("supports duplicate aliases", func() {
@@ -654,12 +678,13 @@ y: *a
 `))
 				v := make(map[string]interface{})
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]interface{}{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]interface{}{
 					"a": map[interface{}]interface{}{"b": int64(1)},
 					"x": map[interface{}]interface{}{"b": int64(1)},
 					"y": map[interface{}]interface{}{"b": int64(1)},
 				}))
+
 			})
 
 			It("supports overriden anchors", func() {
@@ -672,13 +697,14 @@ Reuse anchor: *anchor
 `))
 				v := make(map[string]interface{})
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v).Should(Equal(map[string]interface{}{
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v).To(Equal(map[string]interface{}{
 					"First occurrence":  "Foo",
 					"Second occurrence": "Foo",
 					"Override anchor":   "Bar",
 					"Reuse anchor":      "Bar",
 				}))
+
 			})
 
 			It("fails if an anchor is undefined", func() {
@@ -688,8 +714,8 @@ a: *missing
 `))
 				var i interface{}
 				err := d.Decode(&i)
-				Ω(err).Should(HaveOccurred())
-				Ω(err.Error()).Should(MatchRegexp("missing anchor.*line.*column.*"))
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(MatchRegexp("missing anchor.*line.*column.*"))
 			})
 
 		})
@@ -704,12 +730,13 @@ z: *b
 `))
 			v := make(map[string]interface{})
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]interface{}{
 				"a": "b",
 				"x": map[interface{}]interface{}{"d": "b"},
 				"z": map[interface{}]interface{}{"d": "b"},
 			}))
+
 		})
 
 		It("redefinition while composing aliases", func() {
@@ -722,12 +749,13 @@ y: *a
 `))
 			v := make(map[string]interface{})
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(Equal(map[string]interface{}{
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(Equal(map[string]interface{}{
 				"a": "b",
 				"x": map[interface{}]interface{}{"d": int64(1)},
 				"y": int64(1),
 			}))
+
 		})
 
 		It("can parse nested anchors", func() {
@@ -746,7 +774,7 @@ b:
 `))
 			v := make(map[string]interface{})
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
+			Expect(err).NotTo(HaveOccurred())
 		})
 	})
 
@@ -757,8 +785,8 @@ b:
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).Should(HaveOccurred())
-			Ω(err.Error()).Should(Equal("Expected document start at line 0, column 0"))
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(Equal("Expected document start at line 0, column 0"))
 		})
 	})
 
@@ -769,8 +797,8 @@ b:
 				v := hasMarshaler{}
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v.Value).Should(BeNil())
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v.Value).To(BeNil())
 			})
 		})
 
@@ -780,7 +808,7 @@ b:
 				v := hasPtrMarshaler{}
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
+				Expect(err).NotTo(HaveOccurred())
 			})
 
 			It("marshals a scalar", func() {
@@ -788,9 +816,9 @@ b:
 				v := hasPtrMarshaler{}
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v.Tag).Should(Equal(yaml_STR_TAG))
-				Ω(v.Value).Should(Equal("abc"))
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v.Tag).To(Equal(yaml_STR_TAG))
+				Expect(v.Value).To(Equal("abc"))
 			})
 
 			It("marshals a sequence", func() {
@@ -798,9 +826,9 @@ b:
 				v := hasPtrMarshaler{}
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v.Tag).Should(Equal(yaml_SEQ_TAG))
-				Ω(v.Value).Should(Equal([]interface{}{"abc", "def"}))
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v.Tag).To(Equal(yaml_SEQ_TAG))
+				Expect(v.Value).To(Equal([]interface{}{"abc", "def"}))
 			})
 
 			It("marshals a map", func() {
@@ -808,9 +836,9 @@ b:
 				v := hasPtrMarshaler{}
 
 				err := d.Decode(&v)
-				Ω(err).ShouldNot(HaveOccurred())
-				Ω(v.Tag).Should(Equal(yaml_MAP_TAG))
-				Ω(v.Value).Should(Equal(map[interface{}]interface{}{"a": "bc"}))
+				Expect(err).NotTo(HaveOccurred())
+				Expect(v.Tag).To(Equal(yaml_MAP_TAG))
+				Expect(v.Value).To(Equal(map[interface{}]interface{}{"a": "bc"}))
 			})
 		})
 	})
@@ -822,8 +850,8 @@ b:
 			var v Number
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v.String()).Should(Equal("123"))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v.String()).To(Equal("123"))
 		})
 
 		It("when the number is an float", func() {
@@ -832,8 +860,8 @@ b:
 			var v Number
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v.String()).Should(Equal("1.23"))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v.String()).To(Equal("1.23"))
 		})
 
 		It("it fails when its a non-Number", func() {
@@ -842,8 +870,8 @@ b:
 			var v Number
 
 			err := d.Decode(&v)
-			Ω(err).Should(HaveOccurred())
-			Ω(err.Error()).Should(MatchRegexp("Not a number: 'on' at line 0, column 0"))
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(MatchRegexp("Not a number: 'on' at line 0, column 0"))
 		})
 
 		It("returns a Number", func() {
@@ -852,11 +880,11 @@ b:
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).ShouldNot(HaveOccurred())
-			Ω(v).Should(BeAssignableToTypeOf(Number("")))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(v).To(BeAssignableToTypeOf(Number("")))
 
 			n := v.(Number)
-			Ω(n.String()).Should(Equal("123"))
+			Expect(n.String()).To(Equal("123"))
 		})
 	})
 	Context("When there are special characters", func() {
@@ -871,8 +899,8 @@ applications:
 			var v interface{}
 
 			err := d.Decode(&v)
-			Ω(err).Should(HaveOccurred())
-			Ω(err.Error()).Should(MatchRegexp("yaml.*did not find.*line.*column.*"))
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(MatchRegexp("yaml.*did not find.*line.*column.*"))
 		})
 	})
 })

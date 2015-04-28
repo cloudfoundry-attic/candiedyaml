@@ -26,7 +26,7 @@ import (
 var scan = func(filename string) {
 	It("scan "+filename, func() {
 		file, err := os.Open(filename)
-		Ω(err).To(BeNil())
+		Expect(err).To(BeNil())
 
 		parser := yaml_parser_t{}
 		yaml_parser_initialize(&parser)
@@ -57,7 +57,7 @@ var scan = func(filename string) {
 		// 			parser.context, parser.problem, m.line, m.column)
 		// 	}
 		// }
-		Ω(failed).To(BeFalse())
+		Expect(failed).To(BeFalse())
 	})
 }
 

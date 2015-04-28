@@ -53,9 +53,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("abc")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_STR_TAG))
-					Ω(aString).To(Equal("abc"))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_STR_TAG))
+					Expect(aString).To(Equal("abc"))
 				})
 
 				It("resolves the empty string", func() {
@@ -64,9 +64,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_STR_TAG))
-					Ω(aString).To(Equal(""))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_STR_TAG))
+					Expect(aString).To(Equal(""))
 
 				})
 
@@ -76,9 +76,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&aString)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(aString).To(Equal(""))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(aString).To(Equal(""))
 					})
 				})
 
@@ -89,9 +89,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pString)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pString).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pString).To(BeNil())
 					})
 				})
 
@@ -105,9 +105,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte(val)
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_BOOL_TAG))
-					Ω(b).To(Equal(expected))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_BOOL_TAG))
+					Expect(b).To(Equal(expected))
 				}
 
 				It("resolves on", func() {
@@ -146,8 +146,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("fail")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid boolean: 'fail' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid boolean: 'fail' at line 0, column 0"))
 				})
 
 				It("resolves null", func() {
@@ -156,9 +156,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&b)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(b).To(BeFalse())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(b).To(BeFalse())
 					})
 				})
 
@@ -169,9 +169,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pb)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pb).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pb).To(BeNil())
 					})
 				})
 			})
@@ -183,9 +183,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("1234")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(1234))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(1234))
 				})
 
 				It("positive ints", func() {
@@ -194,9 +194,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("+678")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(int16(678)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(int16(678)))
 				})
 
 				It("negative ints", func() {
@@ -205,9 +205,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("-2345")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(int32(-2345)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(int32(-2345)))
 				})
 
 				It("base 8", func() {
@@ -216,9 +216,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("0o12")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(10))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(10))
 				})
 
 				It("base 16", func() {
@@ -227,9 +227,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("0xff")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(255))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(255))
 				})
 
 				It("fails on overflow", func() {
@@ -238,8 +238,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("2345")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid integer: '2345' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid integer: '2345' at line 0, column 0"))
 				})
 
 				It("fails on invalid int", func() {
@@ -248,8 +248,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("234f")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid integer: '234f' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid integer: '234f' at line 0, column 0"))
 				})
 
 				It("resolves null", func() {
@@ -258,9 +258,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&i)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(i).To(Equal(0))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(i).To(Equal(0))
 					})
 				})
 
@@ -271,9 +271,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pi)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pi).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pi).To(BeNil())
 					})
 				})
 
@@ -282,16 +282,16 @@ var _ = Describe("Resolver", func() {
 					v := reflect.ValueOf(&i)
 
 					tag, err := resolve_int("12345", v.Elem(), true, event)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(Number("12345")))
-					Ω(i.Int64()).Should(Equal(int64(12345)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(Number("12345")))
+					Expect(i.Int64()).To(Equal(int64(12345)))
 
 					event.value = []byte("1234")
 					tag, err = resolve(event, v.Elem(), true)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(Number("1234")))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(Number("1234")))
 				})
 			})
 
@@ -302,9 +302,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("1234")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(uint(1234)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(uint(1234)))
 				})
 
 				It("resolves positive uints", func() {
@@ -313,9 +313,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("+678")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(uint16(678)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(uint16(678)))
 				})
 
 				It("base 8", func() {
@@ -324,9 +324,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("0o12")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(uint(10)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(uint(10)))
 				})
 
 				It("base 16", func() {
@@ -335,9 +335,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("0xff")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(uint(255)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(uint(255)))
 				})
 
 				It("fails with negative ints", func() {
@@ -346,8 +346,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("-2345")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Unsigned int with negative value: '-2345' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Unsigned int with negative value: '-2345' at line 0, column 0"))
 				})
 
 				It("fails on overflow", func() {
@@ -356,8 +356,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("2345")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid unsigned integer: '2345' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid unsigned integer: '2345' at line 0, column 0"))
 				})
 
 				It("resolves null", func() {
@@ -366,9 +366,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&i)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(i).To(Equal(uint(0)))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(i).To(Equal(uint(0)))
 					})
 				})
 
@@ -379,9 +379,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pi)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pi).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pi).To(BeNil())
 					})
 				})
 
@@ -390,15 +390,15 @@ var _ = Describe("Resolver", func() {
 					v := reflect.ValueOf(&i)
 
 					tag, err := resolve_uint("12345", v.Elem(), true, event)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(Number("12345")))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(Number("12345")))
 
 					event.value = []byte("1234")
 					tag, err = resolve(event, v.Elem(), true)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_INT_TAG))
-					Ω(i).To(Equal(Number("1234")))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_INT_TAG))
+					Expect(i).To(Equal(Number("1234")))
 				})
 			})
 
@@ -409,9 +409,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("2345.01")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(f).To(Equal(float32(2345.01)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(f).To(Equal(float32(2345.01)))
 				})
 
 				It("float64", func() {
@@ -420,9 +420,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("-456456.01")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(f).To(Equal(float64(-456456.01)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(f).To(Equal(float64(-456456.01)))
 				})
 
 				It("+inf", func() {
@@ -431,9 +431,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("+.inf")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(f).To(Equal(math.Inf(1)))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(f).To(Equal(math.Inf(1)))
 				})
 
 				It("-inf", func() {
@@ -442,9 +442,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("-.inf")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(f).To(Equal(float32(math.Inf(-1))))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(f).To(Equal(float32(math.Inf(-1))))
 				})
 
 				It("nan", func() {
@@ -453,9 +453,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte(".NaN")
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(math.IsNaN(f)).To(BeTrue())
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(math.IsNaN(f)).To(BeTrue())
 				})
 
 				It("fails on overflow", func() {
@@ -464,8 +464,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("123e10000")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid float: '123e10000' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid float: '123e10000' at line 0, column 0"))
 				})
 
 				It("fails on invalid float", func() {
@@ -474,8 +474,8 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte("123e1a")
 
 					_, err := resolve(event, v.Elem(), false)
-					Ω(err).Should(HaveOccurred())
-					Ω(err.Error()).Should(Equal("Invalid float: '123e1a' at line 0, column 0"))
+					Expect(err).To(HaveOccurred())
+					Expect(err.Error()).To(Equal("Invalid float: '123e1a' at line 0, column 0"))
 				})
 
 				It("resolves null", func() {
@@ -484,9 +484,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&f)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(f).To(Equal(0.0))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(f).To(Equal(0.0))
 					})
 				})
 
@@ -497,9 +497,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pf)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pf).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pf).To(BeNil())
 					})
 				})
 
@@ -508,16 +508,16 @@ var _ = Describe("Resolver", func() {
 					v := reflect.ValueOf(&i)
 
 					tag, err := resolve_float("12.345", v.Elem(), true, event)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(i).To(Equal(Number("12.345")))
-					Ω(i.Float64()).Should(Equal(12.345))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(i).To(Equal(Number("12.345")))
+					Expect(i.Float64()).To(Equal(12.345))
 
 					event.value = []byte("1.234")
 					tag, err = resolve(event, v.Elem(), true)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(yaml_FLOAT_TAG))
-					Ω(i).To(Equal(Number("1.234")))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(yaml_FLOAT_TAG))
+					Expect(i).To(Equal(Number("1.234")))
 				})
 			})
 
@@ -528,9 +528,9 @@ var _ = Describe("Resolver", func() {
 					event.value = []byte(val)
 
 					tag, err := resolve(event, v.Elem(), false)
-					Ω(err).ShouldNot(HaveOccurred())
-					Ω(tag).Should(Equal(""))
-					Ω(d).To(Equal(date))
+					Expect(err).NotTo(HaveOccurred())
+					Expect(tag).To(Equal(""))
+					Expect(d).To(Equal(date))
 				}
 
 				It("date", func() {
@@ -559,9 +559,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&d)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(d).To(Equal(time.Time{}))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(d).To(Equal(time.Time{}))
 					})
 				})
 
@@ -572,9 +572,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&pd)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_NULL_TAG))
-						Ω(pd).To(BeNil())
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_NULL_TAG))
+						Expect(pd).To(BeNil())
 					})
 				})
 			})
@@ -588,9 +588,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&aString)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_STR_TAG))
-						Ω(aString).Should(Equal("abcdefg"))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_STR_TAG))
+						Expect(aString).To(Equal("abcdefg"))
 					})
 				})
 
@@ -602,9 +602,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&bytes)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_STR_TAG))
-						Ω(bytes).Should(Equal([]byte("abcdefg")))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_STR_TAG))
+						Expect(bytes).To(Equal([]byte("abcdefg")))
 					})
 				})
 
@@ -616,9 +616,9 @@ var _ = Describe("Resolver", func() {
 						v := reflect.ValueOf(&intf)
 
 						tag, err := resolve(event, v.Elem(), false)
-						Ω(err).ShouldNot(HaveOccurred())
-						Ω(tag).Should(Equal(yaml_STR_TAG))
-						Ω(intf).Should(Equal([]byte("abcdefg")))
+						Expect(err).NotTo(HaveOccurred())
+						Expect(tag).To(Equal(yaml_STR_TAG))
+						Expect(intf).To(Equal([]byte("abcdefg")))
 					})
 				})
 			})
@@ -630,8 +630,8 @@ var _ = Describe("Resolver", func() {
 				event.value = []byte("abc")
 
 				_, err := resolve(event, v.Elem(), false)
-				Ω(err).Should(HaveOccurred())
-				Ω(err.Error()).Should(Equal("Unknown resolution for 'abc' using <*string Value> at line 0, column 0"))
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(Equal("Unknown resolution for 'abc' using <*string Value> at line 0, column 0"))
 			})
 		})
 
@@ -640,16 +640,16 @@ var _ = Describe("Resolver", func() {
 				event.value = []byte("on")
 
 				tag, result := resolveInterface(event, false)
-				Ω(result).To(Equal("on"))
-				Ω(tag).Should(Equal(""))
+				Expect(result).To(Equal("on"))
+				Expect(tag).To(Equal(""))
 			})
 
 			It("number returns a string", func() {
 				event.value = []byte("1234")
 
 				tag, result := resolveInterface(event, false)
-				Ω(result).To(Equal("1234"))
-				Ω(tag).Should(Equal(""))
+				Expect(result).To(Equal("1234"))
+				Expect(tag).To(Equal(""))
 			})
 
 			It("returns the empty string", func() {
@@ -657,8 +657,8 @@ var _ = Describe("Resolver", func() {
 				// event.implicit = true
 
 				tag, result := resolveInterface(event, false)
-				Ω(result).To(Equal(""))
-				Ω(tag).Should(Equal(""))
+				Expect(result).To(Equal(""))
+				Expect(tag).To(Equal(""))
 			})
 		})
 	})

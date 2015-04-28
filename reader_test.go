@@ -127,7 +127,7 @@ var _ = Describe("Reader", func() {
 					yaml_parser_initialize(&parser)
 					yaml_parser_set_input_string(&parser, bytes)
 					result := yaml_parser_update_buffer(&parser, end-start)
-					Ω(result).To(Equal(tc.result))
+					Expect(result).To(Equal(tc.result))
 					// outcome := '+'
 					// if result != tc.result {
 					// 	outcome = '-'
@@ -184,7 +184,7 @@ var _ = Describe("Reader", func() {
 				yaml_parser_initialize(&parser)
 				yaml_parser_set_input_string(&parser, bytes[:end-start])
 				result := yaml_parser_update_buffer(&parser, end-start)
-				Ω(result).To(Equal(tc.result))
+				Expect(result).To(Equal(tc.result))
 				yaml_parser_delete(&parser)
 			})
 		}
@@ -213,10 +213,10 @@ var _ = Describe("Reader", func() {
 			for k := 0; k < LONG; k++ {
 				if parser.unread == 0 {
 					updated := yaml_parser_update_buffer(&parser, 1)
-					Ω(updated).To(BeTrue())
+					Expect(updated).To(BeTrue())
 					// printf("\treader error: %s at %d\n", parser.problem, parser.problem_offset);
 				}
-				Ω(parser.unread).ToNot(Equal(0))
+				Expect(parser.unread).NotTo(Equal(0))
 				// printf("\tnot enough characters at %d\n", k);
 				var ch0, ch1 byte
 				if k%2 == 1 {
@@ -226,8 +226,8 @@ var _ = Describe("Reader", func() {
 					ch0 = '\xd0'
 					ch1 = '\xaf'
 				}
-				Ω(parser.buffer[parser.buffer_pos]).To(Equal(ch0))
-				Ω(parser.buffer[parser.buffer_pos+1]).To(Equal(ch1))
+				Expect(parser.buffer[parser.buffer_pos]).To(Equal(ch0))
+				Expect(parser.buffer[parser.buffer_pos+1]).To(Equal(ch1))
 				// printf("\tincorrect UTF-8 sequence: %X %X instead of %X %X\n",
 				//         (int)parser.buffer.pointer[0], (int)parser.buffer.pointer[1],
 				//         (int)ch0, (int)ch1);
@@ -236,7 +236,7 @@ var _ = Describe("Reader", func() {
 				parser.unread -= 1
 			}
 			updated := yaml_parser_update_buffer(&parser, 1)
-			Ω(updated).To(BeTrue())
+			Expect(updated).To(BeTrue())
 			// printf("\treader error: %s at %d\n", parser.problem, parser.problem_offset);
 			yaml_parser_delete(&parser)
 		})
@@ -260,10 +260,10 @@ var _ = Describe("Reader", func() {
 			for k := 0; k < LONG; k++ {
 				if parser.unread == 0 {
 					updated := yaml_parser_update_buffer(&parser, 1)
-					Ω(updated).To(BeTrue())
+					Expect(updated).To(BeTrue())
 					// printf("\treader error: %s at %d\n", parser.problem, parser.problem_offset);
 				}
-				Ω(parser.unread).ToNot(Equal(0))
+				Expect(parser.unread).NotTo(Equal(0))
 				// printf("\tnot enough characters at %d\n", k);
 				var ch0, ch1 byte
 				if k%2 == 1 {
@@ -273,8 +273,8 @@ var _ = Describe("Reader", func() {
 					ch0 = '\xd0'
 					ch1 = '\xaf'
 				}
-				Ω(parser.buffer[parser.buffer_pos]).To(Equal(ch0))
-				Ω(parser.buffer[parser.buffer_pos+1]).To(Equal(ch1))
+				Expect(parser.buffer[parser.buffer_pos]).To(Equal(ch0))
+				Expect(parser.buffer[parser.buffer_pos+1]).To(Equal(ch1))
 				// printf("\tincorrect UTF-8 sequence: %X %X instead of %X %X\n",
 				//         (int)parser.buffer.pointer[0], (int)parser.buffer.pointer[1],
 				//         (int)ch0, (int)ch1);
@@ -283,7 +283,7 @@ var _ = Describe("Reader", func() {
 				parser.unread -= 1
 			}
 			updated := yaml_parser_update_buffer(&parser, 1)
-			Ω(updated).To(BeTrue())
+			Expect(updated).To(BeTrue())
 			// printf("\treader error: %s at %d\n", parser.problem, parser.problem_offset);
 			yaml_parser_delete(&parser)
 		})
