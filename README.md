@@ -5,6 +5,18 @@
 candiedyaml
 ===========
 
+-----
+
+DEPRECATION NOTICE
+------------------
+
+The `candiedyaml` library is no longer under active development and will soon
+be moved to the [cloudfoundry-attic](https://github.com/cloudfoundry-attic)
+GitHub organization. We recommend the use of an alternative library such as
+[`gopkg.in/yaml.v2`](https://gopkg.in/yaml.v2) instead.
+
+-----
+
 YAML for Go
 
 A YAML 1.1 parser with support for YAML 1.2 features
