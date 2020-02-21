@@ -173,6 +173,10 @@ func (d *Decoder) nextEvent() {
 	}
 }
 
+func (d *Decoder) HasNext() bool {
+	return d.event.event_type != yaml_STREAM_END_EVENT
+}
+
 func (d *Decoder) document(rv reflect.Value) {
 	if d.event.event_type != yaml_DOCUMENT_START_EVENT {
 		d.error(fmt.Errorf("Expected document start at %s", d.event.start_mark))
